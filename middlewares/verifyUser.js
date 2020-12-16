@@ -16,7 +16,6 @@ module.exports = (req, res, next) => {
 
     return next()
   } catch (error) {
-    console.log(error)
     return res.status(401).send({
       status: 'Failed',
       statusCode: 401,
