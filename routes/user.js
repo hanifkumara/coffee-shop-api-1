@@ -3,3 +3,4 @@ const router = require('express').Router()
 
 module.exports = router
   .post('/register', user.register)
+  .post('/login', user.login)
