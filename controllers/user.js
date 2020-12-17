@@ -68,5 +68,23 @@ module.exports = {
         message: 'Internal server error!'
       })
     }
+  },
+  getUserById: async (req, res) => {
+    try {
+      const result = await userModel.getUserById(req.params.id)
+      if(!result[0]) return res.status(404).send({
+        status: 'Failed',
+        statusCode: 404,
+        message: 'User not found!'
+      })
+
+      return res.status(200).send({
+        status: 'Success',
+        statusCode: 200,
+        data: result[0]
+      })
+    } catch (error) {
+      
+    }
   }
 }

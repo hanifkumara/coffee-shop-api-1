@@ -18,5 +18,14 @@ module.exports = {
     .catch(error => {
       throw error
     })
+  },
+  getUserById: (id) => {
+    return db(`SELECT id, displayName, firstName, lastName, CONCAT('${process.env.BASE_URL}/images/', avatar) as avatar, mobileNumber, deliveryAddress, birthDate, gender FROM users WHERE id = '${id}'`)
+    .then(result => {
+      return result
+    })
+    .catch(error => {
+      throw error
+    })
   }
 }
