@@ -130,5 +130,62 @@ module.exports = {
         message: 'Internal server error!'
       })
     }
+  },
+  deleteProduct: async (req, res) => {
+    try {
+      const products = await productModel.getProductById(req.params.id)
+      if (!products[0]) return res.status(404).send({
+        status: 'Failed',
+        statusCode: 404,
+        message: 'Product not found!'
+      })
+
+      await productModel.deleteProduct(req.params.id)
+      return res.status(200).send({
+        status: 'Success',
+        statusCode: 200,
+        deleteId: req.params.id,
+        message: 'Product deleted'
+      })
+    } catch (error) {
+      console.log(error)
+      return res.status(500).send({
+        status: 'Failed',
+        statusCode: 500,
+        message: 'Internal server error!'
+      })
+    }
+  },
+  updateProduct: async (req, res) => {
+    try {
+      const products = await productModel.getProductById(req.params.id)
+      if (!products[0]) return res.status(404).send({
+        status: 'Failed',
+        statusCode: 404,
+        message: 'Product not found!'
+      })
+
+      const newProductData = {
+        name: req.body.name || products[0].name,
+        price: req.body.price || products[0].price,
+        description: req.body.description || products[0].description
+      }
+
+      await productModel.updateProduct(newProductData, req.params.id)
+
+      return res.status(201).send({
+        status: 'Success',
+        statusCode: 201,
+        updateId: req.params.id,
+        message: 'Update product success'
+      })
+    } catch (error) {
+      console.log(error)
+      return res.status(500).send({
+        status: 'Failed',
+        statusCode: 500,
+        message: 'Internal server error!'
+      })
+    }
   }
 }

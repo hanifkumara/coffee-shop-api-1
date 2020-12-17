@@ -73,5 +73,23 @@ module.exports = {
     .catch(error => {
       throw error
     })
+  },
+  deleteProduct: (id) => {
+    return db(`DELETE FROM products WHERE id = '${id}'`)
+      .then(result => {
+        return result
+      })
+      .catch(error => {
+        throw error
+      })
+  },
+  updateProduct: (data, id) => {
+    return db(`UPDATE products SET name = '${data.name}', description = '${data.description}', price = ${data.price} WHERE id = '${id}'`)
+      .then(result => {
+        return result
+      })
+      .catch(error => {
+        throw error
+      })
   }
 }

@@ -8,3 +8,5 @@ module.exports = router
   .get('/', verifyUser, product.getAllProducts)
   .get('/:id', verifyUser, product.getProductById)
   .post('/create', [verifyUser, verifyRole, upload], product.createProduct)
+  .patch('/:id', [verifyUser, verifyRole], product.updateProduct)
+  .delete('/:id', [verifyUser, verifyRole], product.deleteProduct)
