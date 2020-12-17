@@ -43,6 +43,45 @@ module.exports = {
       })
     }
   },
+  getProductById: async (req, res) => {
+    try {
+      const result = await productModel.getProductById(req.params.id)
+      if(!result[0]) return res.status(404).send({
+        status: 'Failed',
+        statusCode: 404,
+        message: 'Product not found!'
+      })
+
+      const deliveryMethods = []
+      const sizes = []
+
+      const productDeliveryMethods = await productModel.getDeliveryMethods(req.params.id)
+      const productSizes = await productModel.getSizes(req.params.id)
+
+      for (size of productSizes) {
+        sizes.push(size.size)
+      }
+
+      for (deliveryMethod of productDeliveryMethods) {
+        deliveryMethods.push(deliveryMethod.deliveryMethod)
+      }
+
+      return res.status(200).send({
+        status: 'Success',
+        statusCode: 200,
+        product: result[0],
+        sizes: sizes,
+        deliveryMethods: deliveryMethods 
+      })
+    } catch (error) {
+      console.log(error)
+      return res.status(500).send({
+        status: 'Failed',
+        statusCode: 500,
+        message: 'Internal server error!'
+      })
+    }
+  },
   createProduct: async (req, res) => {
     try {
       let image = 'default_product.jpg'

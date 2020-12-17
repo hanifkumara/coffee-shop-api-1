@@ -6,4 +6,5 @@ const router = require('express').Router()
 
 module.exports = router
   .get('/', verifyUser, product.getAllProducts)
+  .get('/:id', verifyUser, product.getProductById)
   .post('/create', [verifyUser, verifyRole, upload], product.createProduct)

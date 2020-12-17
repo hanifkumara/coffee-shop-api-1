@@ -46,5 +46,32 @@ module.exports = {
     .catch(error => {
       throw error
     })
+  },
+  getProductById: (id) => {
+    return db(`SELECT id, name, CONCAT('${process.env.BASE_URL}/images/', image) as image, price, description FROM products WHERE id = '${id}'`)
+    .then(result => {
+      return result
+    })
+    .catch(error => {
+      throw error
+    })
+  },
+  getDeliveryMethods: (id) => {
+    return db(`SELECT * FROM product_delivery_methods WHERE productId = '${id}'`)
+    .then(result => {
+      return result
+    })
+    .catch(error => {
+      throw error
+    })
+  },
+  getSizes: (id) => {
+    return db(`SELECT * FROM product_sizes WHERE productId = '${id}'`)
+    .then(result => {
+      return result
+    })
+    .catch(error => {
+      throw error
+    })
   }
 }
