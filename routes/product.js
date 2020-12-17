@@ -1,8 +1,9 @@
 const product = require('../controllers/product')
 const verifyUser = require('../middlewares/verifyUser')
 const verifyRole = require('../middlewares/verifyRole')
+const upload = require('../middlewares/upload')
 const router = require('express').Router()
 
 module.exports = router
   .get('/', verifyUser, product.getAllProducts)
-  .post('/create', [verifyUser, verifyRole], product.createProduct)
+  .post('/create', [verifyUser, verifyRole, upload], product.createProduct)

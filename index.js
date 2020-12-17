@@ -9,6 +9,7 @@ const product = require('./routes/product')
 
 app.use(bodyParser.json())
 app.use(cors())
+app.use('/images', express.static(__dirname + '/images'))
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/api/v1/users', user)
