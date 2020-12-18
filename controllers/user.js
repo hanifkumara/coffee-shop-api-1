@@ -60,6 +60,8 @@ module.exports = {
         status: 'Success',
         statusCode: 200,
         authToken: token,
+        userId: user[0].id,
+        userRole: user[0].role,
         message: 'Login success!'
       })
     } catch (error) {

@@ -6,6 +6,7 @@ const app = express()
 
 const user = require('./routes/user')
 const product = require('./routes/product')
+const order = require('./routes/order')
 
 app.use(bodyParser.json())
 app.use(cors())
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/api/v1/users', user)
 app.use('/api/v1/products', product)
+app.use('/api/v1/orders', order)
 
 const port = process.env.PORT || 5000
 app.listen(port, () => console.log(`Server running on port ${port}`))
