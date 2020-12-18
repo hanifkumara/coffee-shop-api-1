@@ -3,7 +3,7 @@ require('dotenv').config()
 
 module.exports = {
   getNumOfProducts: (data) => {
-    return db(`SELECT * FROM products WHERE name LIKE '%${data.keyword}%' ORDER BY price ${data.sort}`)
+    return db(`SELECT * FROM products WHERE name LIKE '%${data.keyword}%' OR category LIKE '%${data.keyword}%' ORDER BY price ${data.sort}`)
     .then(result => {
       return result
     })
