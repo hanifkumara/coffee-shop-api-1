@@ -12,7 +12,7 @@ module.exports = {
     }) 
   },
   getAllProducts: (data) => {
-    return db(`SELECT id, name, CONCAT('${process.env.BASE_URL}/images/', image) as image, price FROM products WHERE name LIKE '%${data.keyword}%' ORDER BY price ${data.sort} LIMIT ${data.page * 12 - 12}, 12`)
+    return db(`SELECT id, name, CONCAT('${process.env.BASE_URL}/images/', image) as image, price FROM products WHERE name LIKE '%${data.keyword}%' OR category LIKE '%${data.keyword}%' ORDER BY price ${data.sort} LIMIT ${data.page * 12 - 12}, 12`)
     .then(result => {
       return result
     })
