@@ -20,12 +20,21 @@ module.exports = {
     })
   },
   getUserById: (id) => {
-    return db(`SELECT id, displayName, firstName, lastName, CONCAT('${process.env.BASE_URL}/images/', avatar) as avatar, mobileNumber, deliveryAddress, birthDate, gender FROM users WHERE id = '${id}'`)
+    return db(`SELECT id, displayName, firstName, lastName, CONCAT('${process.env.BASE_URL}/images/', avatar) as avatar, mobileNumber, deliveryAddress, birthDate, avatar as image, gender, email FROM users WHERE id = '${id}'`)
     .then(result => {
       return result
     })
     .catch(error => {
       throw error
     })
+  },
+  updateUser: (data, id) => {
+    return db(`UPDATE users SET displayName = '${data.displayName}', firstName = '${data.firstName}', lastName = '${data.lastName}', deliveryAddress = '${data.deliveryAddress}', mobileNumber = '${data.mobileNumber}', avatar = '${data.avatar}', birthDate = '${data.birthDate}', gender = '${data.gender}' WHERE id  = '${id}'`)
+    .then(result => {
+      return result
+    })
+    .catch(error => {
+      throw error
+    }) 
   }
 }

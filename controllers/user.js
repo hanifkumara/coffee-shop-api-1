@@ -1,7 +1,9 @@
+require('dotenv').config()
 const userModel = require('../models/user')
 const bcrypt = require('bcrypt')
 const { v4: uuid } = require('uuid')
 const jwt = require('jsonwebtoken')
+const fs = require('fs')
 
 module.exports = {
   register: async (req, res) => {
@@ -72,7 +74,7 @@ module.exports = {
   getUserById: async (req, res) => {
     try {
       const result = await userModel.getUserById(req.params.id)
-      if(!result[0]) return res.status(404).send({
+      if (!result[0]) return res.status(404).send({
         status: 'Failed',
         statusCode: 404,
         message: 'User not found!'
@@ -84,7 +86,59 @@ module.exports = {
         data: result[0]
       })
     } catch (error) {
-      
+      console.log(error)
+      return res.status(500).send({
+        status: 'Failed',
+        statusCode: 500,
+        message: 'Internal server error!'
+      })
+    }
+  },
+  updateUser: async (req, res) => {
+    try {
+      const user = await userModel.getUserById(req.params.id)
+      if (!user[0]) {
+        if(req.file) {
+          fs.unlink(pro + req.file.filename)
+        }
+        return res.status(404).send({
+          status: 'Failed',
+          statusCode: 404,
+          message: 'User not found!'
+        })
+      }
+
+      let avatar = null
+      if (req.file) {
+        avatar = req.file.filename
+        fs.unlinkSync(process.env.BASE_PATH + '/images/' + user[0].image)
+      }
+
+      const newUserData = {
+        displayName: req.body.displayName || user[0].displayName,
+        firstName: req.body.firstName || user[0].firstName,
+        lastName: req.body.lastName || user[0].lastName,
+        mobileNumber: req.body.mobileNumber || user[0].mobileNumber,
+        deliveryAddress: req.body.deliveryAddress || user[0].deliveryAddress,
+        gender: req.body.gender || user[0].gender,
+        birthDate: req.body.birthDate || user[0].birthDate,
+        avatar: avatar || user[0].image
+      }
+
+      await userModel.updateUser(newUserData, req.params.id)
+      return res.status(200).send({
+        status: 'Success',
+        statusCode: 200,
+        updateId: req.params.id,
+        message: 'User profile updated!'
+      })
+    } catch (error) {
+      console.log(error)
+      return res.status(500).send({
+        status: 'Failed',
+        statusCode: 500,
+        message: 'Internal server error!'
+      })
     }
   }
 }
