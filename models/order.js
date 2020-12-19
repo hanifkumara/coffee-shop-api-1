@@ -20,7 +20,7 @@ module.exports = {
     })
   },
   getOrderByCartId: (id) => {
-    return db(`SELECT orders.id, products.name, orders.price, orders.productSize, orders.amount FROM orders  INNER JOIN products ON products.id = orders.productId WHERE cartId = '${id}'`)
+    return db(`SELECT orders.id, products.name, orders.price, orders.productSize, orders.amount, CONCAT('${process.env.BASE_URL}/images/', products.image) as image FROM orders  INNER JOIN products ON products.id = orders.productId WHERE cartId = '${id}'`)
     .then(result => {
       return result
     })
