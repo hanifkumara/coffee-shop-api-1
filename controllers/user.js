@@ -101,7 +101,7 @@ module.exports = {
       const user = await userModel.getUserById(req.params.id)
       if (!user[0]) {
         if(req.file) {
-          fs.unlink(pro + req.file.filename)
+          fs.unlinkSync(process.env.BASE_PATH + '/images/' + user[0].image)
         }
         return res.status(404).send({
           status: 'Failed',

@@ -84,7 +84,7 @@ module.exports = {
       })
   },
   updateProduct: (data, id) => {
-    return db(`UPDATE products SET name = '${data.name}', description = '${data.description}', price = ${data.price} WHERE id = '${id}'`)
+    return db(`UPDATE products SET name = '${data.name}', description = '${data.description}', price = ${data.price}, image = '${data.image}' WHERE id = '${id}'`)
       .then(result => {
         return result
       })

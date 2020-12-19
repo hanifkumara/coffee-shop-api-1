@@ -165,10 +165,17 @@ module.exports = {
         message: 'Product not found!'
       })
 
+      let image = null
+      if (req.file) {
+        image = req.file.filename
+        fs.unlinkSync(process.env.BASE_PATH + '/images/' + products[0].image)
+      }
+
       const newProductData = {
         name: req.body.name || products[0].name,
         price: req.body.price || products[0].price,
-        description: req.body.description || products[0].description
+        description: req.body.description || products[0].description,
+        image: image || products[0].image
       }
 
       await productModel.updateProduct(newProductData, req.params.id)
