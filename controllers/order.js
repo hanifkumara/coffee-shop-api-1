@@ -58,10 +58,13 @@ module.exports = {
         message: 'No cart found. Try order product'
       })
 
+      const orders = await orderModel.getOrderByCartId(carts[0].id)
+
       return res.status(200).send({
         status: 'Success',
         statusCode: 200,
-        cart: carts[0]
+        cart: carts[0],
+        orders: orders
       })
     } catch (error) {
       console.log(error)
@@ -105,11 +108,12 @@ module.exports = {
         statusCode: 404,
         message: 'No order found'
       })
-
+      const cartOrders = await orderModel.getOrderByCartId(orders[0].id)
       return res.status(200).send({
         status: 'Success',
         statusCode: 200,
-        order: orders[0]
+        order: orders[0],
+        orders: cartOrders
       })
     } catch (error) {
       console.log(error)

@@ -19,6 +19,15 @@ module.exports = {
       throw error
     })
   },
+  getOrderByCartId: (id) => {
+    return db(`SELECT orders.id, products.name, orders.price, orders.productSize, orders.amount FROM orders  INNER JOIN products ON products.id = orders.productId WHERE cartId = '${id}'`)
+    .then(result => {
+      return result
+    })
+    .catch(error => {
+      throw error
+    })
+  },
   createCart: (id, userId) => {
     return db(`INSERT INTO carts SET id = '${id}', userId = '${userId}', status = 'ready', subTotal = 0, tax = 2500, shipping = 0, deliveryMethod = 'Dine In'`)
     .then(result => {
