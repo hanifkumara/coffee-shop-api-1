@@ -21,7 +21,7 @@ module.exports = {
       
       let totalPrice = 0
       if (req.body.productSize === 'R' || req.body.productSize === '250gr') totalPrice = (parseInt(products[0].price) + (parseInt(products[0].price) * 0.05)) * req.body.amount
-      if (req.body.productSize === 'L' || req.body.productSize === '300gr') totalPrice = (parseInt(products[0].price) + (parseInt(products[0].price) * 0.1)) * req.body.amount
+      if (req.body.productSize === 'L' || req.body.productSize === '350gr') totalPrice = (parseInt(products[0].price) + (parseInt(products[0].price) * 0.1)) * req.body.amount
       if (req.body.productSize === 'XL' || req.body.productSize === '500gr') totalPrice = (parseInt(products[0].price) + (parseInt(products[0].price) * 0.15)) * req.body.amount
 
       await orderModel.insertOrder({
