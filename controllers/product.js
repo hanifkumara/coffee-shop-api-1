@@ -1,5 +1,6 @@
 const { v4: uuid } = require('uuid')
 const productModel = require('../models/product')
+const fs = require('fs')
 
 module.exports = {
   getAllProducts: async (req, res) => {
@@ -168,14 +169,17 @@ module.exports = {
       let image = null
       if (req.file) {
         image = req.file.filename
-        fs.unlinkSync(process.env.BASE_PATH + '/images/' + products[0].image)
+      }
+
+      if (req.file && products[0].imageFile !== 'default_product.jpg') {
+        fs.unlinkSync(process.env.BASE_PATH + '/images/' + products[0].imageFile)
       }
 
       const newProductData = {
         name: req.body.name || products[0].name,
         price: req.body.price || products[0].price,
         description: req.body.description || products[0].description,
-        image: image || products[0].image
+        image: image || products[0].imageFile
       }
 
       await productModel.updateProduct(newProductData, req.params.id)

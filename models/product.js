@@ -48,7 +48,7 @@ module.exports = {
     })
   },
   getProductById: (id) => {
-    return db(`SELECT id, name, CONCAT('${process.env.BASE_URL}/images/', image) as image, price, description FROM products WHERE id = '${id}'`)
+    return db(`SELECT id, name, CONCAT('${process.env.BASE_URL}/images/', image) as image, price, image as imageFile, description FROM products WHERE id = '${id}'`)
     .then(result => {
       return result
     })

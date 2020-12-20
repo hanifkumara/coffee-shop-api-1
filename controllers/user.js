@@ -113,6 +113,9 @@ module.exports = {
       let avatar = null
       if (req.file) {
         avatar = req.file.filename
+      }
+
+      if (req.file && user[0].image !== 'default.jpg') {
         fs.unlinkSync(process.env.BASE_PATH + '/images/' + user[0].image)
       }
 
